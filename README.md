@@ -1,10 +1,10 @@
-# Faktory [![Build Status Image](https://travis-ci.org/nanobox-io/nanobox-docker-faktory.svg)](https://travis-ci.org/nanobox-io/nanobox-docker-faktory)
+# Faktory [![Build Status Image](https://github.com/mu-box/microbox-docker-faktory/actions/workflows/ci.yaml/badge.svg)](https://github.com/mu-box/microbox-docker-faktory/actions)
 
-This is an [Faktory](http://contribsys.com/faktory/) Docker image used to launch a [Faktory](http://contribsys.com/faktory/) service on Nanobox. To use this image, add a data component to your `boxfile.yml` with the `nanobox/faktory` image specified:
+This is an [Faktory](http://contribsys.com/faktory/) Docker image used to launch a [Faktory](http://contribsys.com/faktory/) service on Microbox. To use this image, add a data component to your `boxfile.yml` with the `mubox/faktory` image specified:
 
 ```yaml
 data.faktory:
-  image: nanobox/faktory
+  image: mubox/faktory
 ```
 
 ## Faktory Configuration Options
@@ -14,8 +14,8 @@ Faktory components are configured in your `boxfile.yml`. All available configura
 
 #### Overview of Faktory boxfile.yml Settings
 ```yaml
-data.redis:
-  image: nanobox/redis
+data.faktory:
+  image: mubox/faktory
   config:
 ```
 
@@ -30,11 +30,11 @@ When configuring a Faktory service in your Boxfile, can specify which version of
 ```yaml
 # default setting
 data.faktory:
-  image: nanobox/faktory:0.7.0
+  image: mubox/faktory:0.7.0
 ```
 
 ## Help & Support
-This is a Faktory Docker image provided by [Nanobox](http://nanobox.io). If you are running into an issue with the image, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-docker-faktory/issues/new).
+This is a Faktory Docker image provided by [Microbox](http://microbox.cloud). If you are running into an issue with the image, feel free to [create a new issue on this project](https://github.com/mu-box/microbox-docker-faktory/issues/new).
 
 ## License
-Mozilla Public License, version 2.0
+This project is released under [The MIT License](http://opensource.org/licenses/MIT).

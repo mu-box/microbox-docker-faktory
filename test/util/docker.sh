@@ -14,7 +14,7 @@ run_hook() {
 
   docker exec \
     $container \
-    /opt/nanobox/hooks/$hook "$payload"
+    /opt/microbox/hooks/$hook "$payload"
 }
 
 start_container() {
@@ -25,7 +25,7 @@ start_container() {
     -d \
     -e "PATH=$(path)" \
     --privileged \
-    nanobox/faktory:$VERSION
+    mubox/faktory:$VERSION
 }
 
 stop_container() {

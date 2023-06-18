@@ -9,11 +9,11 @@ services:
 
 before_install:
   - docker version
-  - docker network create --driver=bridge --subnet=192.168.0.0/16 --opt="com.docker.network.driver.mtu=1450" --opt="com.docker.network.bridge.name=redd0" nanobox
+  - docker network create --driver=bridge --subnet=192.168.0.0/16 --opt="com.docker.network.driver.mtu=1450" --opt="com.docker.network.bridge.name=redd0" microbox
   - sudo apt-get -y install python-pip
   - sudo pip install docker==2.7.0 docker-squash
-  - git clone https://github.com/nanobox-io/nanobox-hooks-faktory.git hooks
-  - docker build -t nanobox/faktory:$VERSION ./$VERSION
+  - git clone https://github.com/mu-box/microbox-hooks-faktory.git hooks
+  - docker build -t mubox/faktory:$VERSION ./$VERSION
 
 script:
   - sudo stdbuf -oL test/run_all.sh $VERSION
@@ -25,25 +25,25 @@ after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   - docker build -t ${NAMESPACE}/faktory ./${VERSION};
   - docker-squash -t ${NAMESPACE}/faktory:squashed --tmp-dir /var/tmp/squasher ${NAMESPACE}/faktory
-  
-  # `$VERSION-beta` tag is always pushed (master or any dev branch)
+
+  # `$VERSION-beta` tag is always pushed (main or any dev branch)
   - docker tag ${NAMESPACE}/faktory:squashed ${NAMESPACE}/faktory:${VERSION}-beta;
   - docker push ${REMOTE}${NAMESPACE}/faktory:${VERSION}-beta;
-  
-  # `beta` tag is always pushed (master or any dev branch)
+
+  # `beta` tag is always pushed (main or any dev branch)
   - if [ "$VERSION" == "0.8.0" ]; then
       docker tag ${NAMESPACE}/faktory:squashed ${NAMESPACE}/faktory:beta;
       docker push ${REMOTE}${NAMESPACE}/faktory:beta;
     fi
-    
-  # `latest` tag is only pushed on master && most recent version
-  - if [ "$BRANCH" == "master" ] && [ "$VERSION" == "0.8.0" ]; then
+
+  # `latest` tag is only pushed on main && most recent version
+  - if [ "$BRANCH" == "main" ] && [ "$VERSION" == "0.8.0" ]; then
       docker tag ${NAMESPACE}/faktory:squashed ${NAMESPACE}/faktory;
       docker push ${REMOTE}${NAMESPACE}/faktory;
     fi
-    
-  # `$VERSION` (latest/stable implied) tag is only pushed on master. tag branch for clarity otherwise (`$VERSION-$BRANCH`)
-  - if [ "$BRANCH" == "master" ]; then
+
+  # `$VERSION` (latest/stable implied) tag is only pushed on main. tag branch for clarity otherwise (`$VERSION-$BRANCH`)
+  - if [ "$BRANCH" == "main" ]; then
       docker tag ${NAMESPACE}/faktory:squashed ${NAMESPACE}/faktory:${VERSION};
       docker push ${REMOTE}${NAMESPACE}/faktory:${VERSION};
     else

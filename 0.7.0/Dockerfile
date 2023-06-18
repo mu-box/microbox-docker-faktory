@@ -1,9 +1,9 @@
 # -*- mode: Dockerfile; tab-width: 4;indent-tabs-mode: nil;-*-
 # vim: ts=4 sw=4 ft=Dockerfile et: 1
-FROM nanobox/runit
+FROM mubox/base
 
 # Create directories
-RUN mkdir -p /var/log/gonano
+RUN mkdir -p /var/log/gomicro
 
 # Install arping
 RUN apt-get update -qq && \
@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
-USER gonano
+USER gomicro
 
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
@@ -23,28 +23,28 @@ RUN rm -rf /data/var/db/pkgin && \
 
 USER root
 
-RUN rm -rf /var/gonano/db/pkgin && \
-    /opt/gonano/bin/pkgin -y up && \
-    /opt/gonano/bin/pkgin -y in \
+RUN rm -rf /var/gomicro/db/pkgin && \
+    /opt/gomicro/bin/pkgin -y up && \
+    /opt/gomicro/bin/pkgin -y in \
         jq \
         rsync && \
-    rm -rf /var/gonano/db/pkgin/cache
+    rm -rf /var/gomicro/db/pkgin/cache
 
-RUN /opt/gonano/bin/gem install remote_syslog_logger
+RUN /opt/gomicro/bin/gem install remote_syslog_logger
 
 # Install hooks
-RUN mkdir -p /opt/nanobox/hooks && \
-    mkdir -p /var/nanobox && \
+RUN mkdir -p /opt/microbox/hooks && \
+    mkdir -p /var/microbox && \
     curl \
       -f \
       -k \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/faktory-stable.tgz \
-        | tar -xz -C /opt/nanobox/hooks && \
+      https://s3.amazonaws.com/tools.microbox.cloud/hooks/faktory-stable.tgz \
+        | tar -xz -C /opt/microbox/hooks && \
     curl \
       -f \
       -k \
-      -o /var/nanobox/hooks.md5 \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/faktory-stable.md5
+      -o /var/microbox/hooks.md5 \
+      https://s3.amazonaws.com/tools.microbox.cloud/hooks/faktory-stable.md5
 
 # Cleanup disk
 RUN rm -rf \
@@ -55,4 +55,4 @@ RUN rm -rf \
 WORKDIR /data
 
 # Run runit automatically
-CMD [ "/opt/gonano/bin/nanoinit" ]
+CMD [ "/opt/gomicro/bin/microinit" ]

@@ -42,10 +42,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SCRIPT
     echo "Building docker image..."
     cd /vagrant
-    docker build -t nanobox/faktory:0.7.0 --no-cache=true 0.7.0
-    docker tag nanobox/faktory:0.7.0 nanobox/faktory:0.7.0
-    docker build -t nanobox/faktory:0.8.0 --no-cache=true 0.8.0
-    docker tag nanobox/faktory:0.8.0 nanobox/faktory:0.8.0
+    docker build -t mubox/faktory:0.7.0 --no-cache=true 0.7.0
+    docker tag mubox/faktory:0.7.0 mubox/faktory:0.7.0
+    docker build -t mubox/faktory:0.8.0 --no-cache=true 0.8.0
+    docker tag mubox/faktory:0.8.0 mubox/faktory:0.8.0
   SCRIPT
 
 end
